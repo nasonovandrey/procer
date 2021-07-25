@@ -1,5 +1,3 @@
-#!/home/kieserel/All/Projects/procer/bin/python
-
 from multiprocessing.connection import Client
 from subprocess import Popen
 from random import choice
