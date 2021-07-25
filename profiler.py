@@ -25,7 +25,7 @@ class ProcessProfiler:
                 else:
                     profiles = []
                     for uid in self.proc_list:
-                        file = open(CONTROL_DIR+uid+'/profile')
+                        file = open(CONTROL_DIR+'/'+uid+'/profile')
                         lines = []
                         for line in file:
                             lines.append(line)
