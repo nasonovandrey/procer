@@ -1,19 +1,16 @@
-from subprocess import Popen, PIPE
+#!/home/kieserel/All/Projects/procer/bin/python
+
 from multiprocessing.connection import Client
-import psutil
-import sys
-import os
-import random
-import string
-
-
-CONTROL_DIR = '/home/kieserel/.procer'
+from subprocess import Popen
+from random import choice
+from string import ascii_letters
+from sys import argv
 
 
 if __name__ == '__main__':
-    command = sys.argv[1]
+    command = argv[1]
     if command == '--start':
-        process = Popen(['python', 'warden.py'])
+        process = Popen(['python', 'profiler.py'])
     elif command == '--show':
         address = ('localhost', 6000)
         conn = Client(address)
@@ -27,9 +24,9 @@ if __name__ == '__main__':
         conn.send('stop')
         conn.close()
     elif command == '--run':
-        uid = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        uid = ''.join(choice(ascii_letters) for _ in range(8))
         address = ('localhost', 6000)
         conn = Client(address)
         conn.send(uid)
-        process = Popen(['python', 'deputy.py', uid]+sys.argv[2:])
+        process = Popen(['python', 'handler.py', uid]+argv[2:])
         

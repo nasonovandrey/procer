@@ -1,17 +1,19 @@
 from multiprocessing.connection import Listener
 from tabulate import tabulate
-import argparse
+from shutil import rmtree
+from os import mkdir
+
+from config import CONTROL_DIR
+from config import PORT
 
 
-CONTROL_DIR='/home/kieserel/.procer/'
-
-
-class Warden:
+class ProcessProfiler:
 
     def __init__(self, port):
         self.listener = Listener(('localhost', port))
         self.proc_list = []
         self.headers = ['uid', 'start_time', 'pid', 'end_time', 'return_code', 'status']
+        mkdir(CONTROL_DIR)
     
     def __call__(self):
         while True:
@@ -32,6 +34,7 @@ class Warden:
                     conn.send(msg)
             elif msg == 'stop':
                 conn.close()
+                rmtree(CONTROL_DIR)
                 exit()
             else:
                 self.proc_list.append(msg)
@@ -39,5 +42,5 @@ class Warden:
 
 
 if __name__ == '__main__':
-    warden = Warden(6000)
-    warden()
+    process_profiler = ProcessProfiler(PORT)
+    process_profiler()
