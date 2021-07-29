@@ -19,7 +19,7 @@ if __name__ == '__main__':
         msg = conn.recv()
         print(msg)
         conn.close()
-    elif command == '--stop':
+    elif command == '--clear':
         address = ('localhost', 6000)
         conn = Client(address)
         conn.send('stop')

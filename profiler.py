@@ -32,7 +32,7 @@ class ProcessProfiler:
                         profiles.append([uid]+lines)
                     msg = tabulate(profiles, self.headers)
                     conn.send(msg)
-            elif msg == 'stop':
+            elif msg == 'clear':
                 conn.close()
                 rmtree(CONTROL_DIR)
                 exit()
